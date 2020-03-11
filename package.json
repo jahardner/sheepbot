@@ -1,0 +1,13 @@
+{
+  "name": "evilsheep",
+  "version": "1.0.0",
+  "description": "Discord Bot to make DM's life easier",
+  "main": "bot.js",
+  "author": "beepbeep",
+  "dependencies": {
+    "discord.io": "^2.5.3",
+    "discord.js": "^12.0.1",
+    "fs": "0.0.1-security",
+    "winston": "^3.2.1"
+  }
+}
