@@ -52,7 +52,7 @@ function writeOut() {
 	try {
 		var text = "";
 		for (var i = 0; i < players.length; i++) {
-			text += "<font face='"+style.font+"' p2 style='color: #"+(speaking[i] ? style.coloron : style.coloroff)+";'>"+players[i]+"</p2>\n";
+			text += "<font face='"+style.font+"' p2 style='color: #"+(speaking[i] ? style.coloron : style.coloroff)+";'>"+players[i]+"</p2><br>";
 		}	
 		const data = fs.writeFileSync('\discord.html', text)
 	} catch (err) {
