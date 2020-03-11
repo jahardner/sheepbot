@@ -39,6 +39,7 @@ client.on('guildMemberSpeaking', (member, speaking) => {
 	var index = players.indexOf(member.displayName);
 	speaking[index] = (speaking !== null);
 	debug("speaking triggered: " + speaking);
+	writeOut();
 });
 
 function botjoin(channel) {
