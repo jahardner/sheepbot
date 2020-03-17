@@ -9,7 +9,7 @@ const client = new Discord.Client();
 
 var players = [];
 var speaking = [];
-var botjoined = false;
+var botInChannel = false;
 
 client.login(auth.token);
 
@@ -18,15 +18,21 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   let oldUserChannel = oldMember.channel;
   
   if(oldUserChannel === null && newUserChannel !== null && newUserChannel.toString() === style.channel) {
-	  if (!botjoined) {botjoin(newUserChannel)};
+	  if (!botInChannel) {botjoin(newUserChannel)};
 	  // User Joins a voice channel
 	  if (oldMember.member.displayName !== style.botname) {
 		  players.push(oldMember.member.displayName);
-		  speaking.push(oldMember.speaking !== null);
+		  if (oldMember.speaking) {
+			  speaking.push(true);
+			  debug("speaking true: " + speaking[0]);
+		  } else {
+			  speaking.push(false);
+			  debug("speaking false: " + speaking[0]);
+		  }
 		  writeOut();
 	  }
   } else if(newUserChannel === null && oldUserChannel.toString() === style.channel){
-	  if (!botjoined) {botjoin(oldUserChannel)};
+	  if (oldUserChannel.members.size <= 1) {botleave(oldUserChannel)};
 	  // User leaves a voice channel
 	  var index = players.indexOf(oldMember.member.displayName);
 	  players.splice(index, 1);
@@ -37,16 +43,26 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
 
 client.on('guildMemberSpeaking', (member, speaking) => {
 	var index = players.indexOf(member.displayName);
-	speaking[index] = (speaking !== null);
-	debug("speaking triggered: " + speaking);
+	if (speaking) {
+		speaking[index] = true;
+	} else {
+		speaking[index] = false;
+	}
+	debug("speaking changed");
 	writeOut();
 });
 
 function botjoin(channel) {
-	botjoined = true;
-	channel.join();
+	botInChannel = true;
+	channel.join()
+	  .then(connection => {
+	  connection.play('join.mp3')});
 };
 
+function botleave(channel) {
+	botInChannel = false;
+	channel.leave();
+};
 
 function writeOut() {
 	try {

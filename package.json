@@ -5,8 +5,11 @@
   "main": "bot.js",
   "author": "beepbeep",
   "dependencies": {
+    "@discordjs/opus": "^0.1.0",
     "discord.io": "^2.5.3",
-    "discord.js": "^12.0.1",
+    "discord.js": "^12.0.2",
+    "ffmpeg": "0.0.4",
+    "ffmpeg-binaries": "^3.2.2-3",
     "fs": "0.0.1-security",
     "winston": "^3.2.1"
   }
